@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=hubiC Status
+GenericName=Network Storage Status Icon
+Comment=hubiC is an online storage platform provided by OVH. This is a status icon for the main executable
+Exec=hubic-gtk
+Icon=/usr/share/icons/hicolor/128x128/hubic.png
+Terminal=false
+Type=Application
+Categories=Network;
+StartupNotify=false

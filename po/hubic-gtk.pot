@@ -1,0 +1,188 @@
+# HubicGTK Translation Effort
+# Copyright (C) YEAR HubicGTK volunteers
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: HubicGTK 0.5\n"
+"Report-Msgid-Bugs-To: bugs@depar.is\n"
+"POT-Creation-Date: 2015-08-06 14:32+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: hubic-gtk.py:27
+msgid "Idle"
+msgstr ""
+
+#: hubic-gtk.py:28
+msgid "Busy"
+msgstr ""
+
+#: hubic-gtk.py:29
+msgid "Paused"
+msgstr ""
+
+#: hubic-gtk.py:30
+msgid "Connecting"
+msgstr ""
+
+#: hubic-gtk.py:31
+msgid "NotConnected"
+msgstr ""
+
+#: hubic-gtk.py:32
+msgid "Synchronized"
+msgstr ""
+
+#: hubic-gtk.py:33
+msgid "Unsynchronized"
+msgstr ""
+
+#: hubic-gtk.py:34
+msgid "NoStatus"
+msgstr ""
+
+#: hubic-gtk.py:35
+msgid "Error"
+msgstr ""
+
+#: hubic-gtk.py:36
+msgid "Starting"
+msgstr ""
+
+#: hubic-gtk.py:37
+msgid "Killed"
+msgstr ""
+
+#: hubic-gtk.py:149
+msgid "Pease enter your password"
+msgstr ""
+
+#: hubic-gtk.py:172
+#, python-brace-format
+msgid "Umount {0}"
+msgstr ""
+
+#: hubic-gtk.py:175
+#, python-brace-format
+msgid "Mount {0}"
+msgstr ""
+
+#: hubic-gtk.py:180
+msgid "Encrypted repositories"
+msgstr ""
+
+#: hubic-gtk.py:191 hubic-gtk.py:193
+msgid "HubicStatus Secure Repositories"
+msgstr ""
+
+#: hubic-gtk.py:206
+#, python-brace-format
+msgid "No config file path declared for {0}"
+msgstr ""
+
+#: hubic-gtk.py:217 hubic-gtk.py:223
+#, python-brace-format
+msgid ""
+"{0} already exists in your file system but is NOT an empty folder. Please "
+"fix it and then retry to mount {1}"
+msgstr ""
+
+#: hubic-gtk.py:243
+#, python-brace-format
+msgid ""
+"Error while reading your password from {0}. Please check if everything is OK "
+"before retrying."
+msgstr ""
+
+#: hubic-gtk.py:254
+#, python-brace-format
+msgid "{0} correctly mounted"
+msgstr ""
+
+#: hubic-gtk.py:261
+#, python-brace-format
+msgid "An error occured while mounting {0}"
+msgstr ""
+
+#: hubic-gtk.py:267
+#, python-brace-format
+msgid "{0} successfully umounted"
+msgstr ""
+
+#: hubic-gtk.py:271
+#, python-brace-format
+msgid "An error occured while umounting {0}"
+msgstr ""
+
+#: hubic-gtk.py:350
+#, python-brace-format
+msgid "{0} Resume Hubic as network is up"
+msgstr ""
+
+#: hubic-gtk.py:358
+#, python-brace-format
+msgid "{0} Pause Hubic as network connectivity seems to be down"
+msgstr ""
+
+#: hubic-gtk.py:455
+#, python-brace-format
+msgid "{0} {1} ({2}%) used on {3} {4} total"
+msgstr ""
+
+#: hubic-gtk.py:471
+#, python-brace-format
+msgid "Up: {0} {1}/s – Down: {2} {3}/s"
+msgstr ""
+
+#: hubic-gtk.py:496
+#, python-brace-format
+msgid "{0} waiting ({1} {2} up – {3} {4} down)"
+msgstr ""
+
+#: hubic-gtk.py:507
+msgid "Current transfers"
+msgstr ""
+
+#: hubic-gtk.py:514
+msgid "Start Hubic"
+msgstr ""
+
+#: hubic-gtk.py:523
+msgid "Resume synchronization"
+msgstr ""
+
+#: hubic-gtk.py:527
+msgid "Suspend synchronization"
+msgstr ""
+
+#: hubic-gtk.py:535
+msgid "Stop Hubic"
+msgstr ""
+
+#: hubic-gtk.py:548
+msgid "Show notification messages"
+msgstr ""
+
+#: hubic-gtk.py:569
+msgid "Last messages"
+msgstr ""
+
+#: hubic-gtk.py:656
+msgid ""
+"An attempt to get a status icon for hubiC on Gnu/Linux and provide an easy "
+"way to manage your encfs synchronised folders."
+msgstr ""
+
+#: hubic-gtk.py:660
+msgid ""
+"HubicGTK is released under the WTF public license\n"
+"Status icons use famfamfam silk icons, released under CC By 2.5 license"
+msgstr ""
