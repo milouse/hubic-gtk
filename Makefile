@@ -2,7 +2,6 @@ DEST=/usr
 L10N=fr en_US
 PKGNAME=hubic-gtk
 PKGVER=0.5.2
-FOSSIL=no
 
 all: build install
 
@@ -37,6 +36,8 @@ uninstall:
 	rm $(DEST)/share/icons/hicolor/16x16/hubic_busy.png
 	rm $(DEST)/share/icons/hicolor/16x16/hubic_error.png
 	rm $(DEST)/share/applications/$(PKGNAME).desktop
+	rm $(DEST)/share/licenses/$(PKGNAME)/LICENSE
+	rmdir $(DEST)/share/licenses/$(PKGNAME)
 
 	for lang in $(L10N) ; do \
 	  rm $(DEST)/share/locale/$$lang/LC_MESSAGES/hubic-gtk.mo ; \
