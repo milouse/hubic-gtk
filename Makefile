@@ -1,7 +1,7 @@
 DEST=/usr
 L10N=fr en_US
 PKGNAME=hubic-gtk
-PKGVER=0.5.2
+#PKGVER=dev
 
 all: build install
 
