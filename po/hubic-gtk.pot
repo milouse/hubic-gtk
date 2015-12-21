@@ -1,14 +1,14 @@
 # HubicGTK Translation Effort
 # Copyright (C) YEAR HubicGTK volunteers
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the HubicGTK package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: HubicGTK 0.5\n"
+"Project-Id-Version: HubicGTK 0.5.3\n"
 "Report-Msgid-Bugs-To: bugs@depar.is\n"
-"POT-Creation-Date: 2015-08-06 14:32+0200\n"
+"POT-Creation-Date: 2015-12-21 17:54+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -80,7 +80,7 @@ msgid "Encrypted repositories"
 msgstr ""
 
 #: hubic-gtk.py:191 hubic-gtk.py:193
-msgid "HubicStatus Secure Repositories"
+msgid "HubicGTK Secure Repositories"
 msgstr ""
 
 #: hubic-gtk.py:206

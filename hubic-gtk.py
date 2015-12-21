@@ -188,9 +188,9 @@ class EncfsMenu:
 
 
     def notify(self, msg, urgency=pynotify.URGENCY_NORMAL):
-        pynotify.init(_('HubicStatus Secure Repositories'))
+        pynotify.init(_('HubicGTK Secure Repositories'))
         nota = pynotify.Notification(
-            _('HubicStatus Secure Repositories'),
+            _('HubicGTK Secure Repositories'),
             msg
         )
         nota.set_urgency(urgency)
@@ -398,8 +398,8 @@ class SystrayIconApp:
         self.last_messages.append((file_path, time.strftime("[%d/%m/%Y %H:%M]") + ' ' + message))
 
         if self.show_messages:
-            pynotify.init('HubicStatus')
-            nota = pynotify.Notification('HubicStatus', message)
+            pynotify.init('HubicGTK')
+            nota = pynotify.Notification('HubicGTK', message)
             nota.show()
 
 
@@ -413,8 +413,8 @@ class SystrayIconApp:
         self.last_messages.append((file_path, time.strftime("[%d/%m/%Y %H:%M]") + ' ' + info_message))
 
         if self.show_messages or urgency == 2 or urgency == 3:
-            pynotify.init('HubicStatus')
-            nota = pynotify.Notification('HubicStatus', message)
+            pynotify.init('HubicGTK')
+            nota = pynotify.Notification('HubicGTK', message)
 
             if urgency == 1 or urgency == 2:
                 nota.set_urgency(pynotify.URGENCY_NORMAL)

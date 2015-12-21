@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: HubicStatus 0.3\n"
 "Report-Msgid-Bugs-To: bugs@depar.is\n"
-"POT-Creation-Date: 2015-08-06 14:32+0200\n"
-"PO-Revision-Date: 2015-08-06 14:33+0200\n"
+"POT-Creation-Date: 2015-12-21 17:54+0100\n"
+"PO-Revision-Date: 2015-12-21 17:56+0100\n"
 "Last-Translator: Étienne Deparis <etienne@depar.is>\n"
 "Language-Team: English\n"
 "Language: en_US\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.2\n"
+"X-Generator: Poedit 1.8.6\n"
 
 #: hubic-gtk.py:27
 msgid "Idle"
@@ -81,8 +81,8 @@ msgid "Encrypted repositories"
 msgstr "Encrypted repositories"
 
 #: hubic-gtk.py:191 hubic-gtk.py:193
-msgid "HubicStatus Secure Repositories"
-msgstr "HubicStatus Secure Repositories"
+msgid "HubicGTK Secure Repositories"
+msgstr "HubicGTK Secure Repositories"
 
 #: hubic-gtk.py:206
 #, python-brace-format
