@@ -16,7 +16,7 @@ and notify bindings for python. It is released under the terms of the
 Get it
 ------
 
-The last version is 0.5. You can get it [here](http://projects.depar.is/divers/raw/hubic-gtk/archlinux/hubic-gtk-0.5.tar.gz?name=641a085d76)
+The last version is 0.5. You can get it [here](https://projects.depar.is/hubic-gtk/raw/archlinux/hubic-gtk-0.5.3.tar.gz?name=a363b835a1)
 
 Usage
 -----
@@ -182,5 +182,5 @@ want with.
 A special attention will be given to any translation help. You can
 either:
 
-- [download the main .pot file](http://projects.depar.is/divers/raw/hubic-gtk/po/hubic-gtk.pot?name=tip) or
+- [download the main .pot file](http://projects.depar.is/hubic-gtk/raw/po/hubic-gtk.pot?name=tip) or
 - ask to become member of [the project on transifex](https://www.transifex.com/projects/p/hubicstatus/) (all demands will be honoured)
