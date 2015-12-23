@@ -16,7 +16,7 @@ and notify bindings for python. It is released under the terms of the
 Get it
 ------
 
-The last version is 0.5.3. You can get it [here](https://projects.depar.is/hubic-gtk/raw/archlinux/hubic-gtk-0.5.3.tar.gz?name=a363b835a1)
+The last version is 0.5.4. You can get it [here](https://projects.depar.is/hubic-gtk/raw/archlinux/hubic-gtk-0.5.4.tar.gz?name=e3ebc54738)
 
 Usage
 -----
