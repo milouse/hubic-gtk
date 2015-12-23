@@ -435,6 +435,10 @@ class SystrayIconApp:
             self.ff_helper.open_folder(self.get_hubic_dir())
 
 
+    def on_report_a_bug(self, widget):
+        subprocess.Popen(shlex.split('xdg-open https://projects.depar.is/hubic-gtk/ticket'))
+
+
     def make_menu(self, event_button, event_time):
         menu = gtk.Menu()
 
@@ -579,6 +583,12 @@ class SystrayIconApp:
         encfs_menu = EncfsMenu(self.config, self.get_hubic_dir())
         encfs_menu.build_menu(menu)
 
+        # report a bug
+        reportbug = gtk.MenuItem(_('Report a bug'))
+        reportbug.show()
+        menu.append(reportbug)
+        reportbug.connect('activate', self.on_report_a_bug)
+
         # show about dialog
         about = gtk.ImageMenuItem(gtk.STOCK_ABOUT)
         about.show()
@@ -653,6 +663,7 @@ class SystrayIconApp:
         about_dialog.set_destroy_with_parent(True)
         about_dialog.set_icon_name ("HubicGTK")
         about_dialog.set_name('HubicGTK')
+        about_dialog.set_website('https://projects.depar.is/hubic-gtk')
         about_dialog.set_comments(_("An attempt to get a status icon for hubiC on Gnu/Linux and provide an easy way to manage your encfs synchronised folders."))
         about_dialog.set_logo(gtk.gdk.pixbuf_new_from_file('/usr/share/icons/hicolor/128x128/hubic.png'))
         about_dialog.set_version(HUBIC_STATUS_VERSION)

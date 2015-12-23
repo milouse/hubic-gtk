@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: HubicGTK 0.5.3\n"
+"Project-Id-Version: HubicGTK 0.5.4\n"
 "Report-Msgid-Bugs-To: bugs@depar.is\n"
-"POT-Creation-Date: 2015-12-21 17:54+0100\n"
+"POT-Creation-Date: 2015-12-23 15:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -132,56 +132,60 @@ msgstr ""
 msgid "{0} Pause Hubic as network connectivity seems to be down"
 msgstr ""
 
-#: hubic-gtk.py:455
+#: hubic-gtk.py:459
 #, python-brace-format
 msgid "{0} {1} ({2}%) used on {3} {4} total"
 msgstr ""
 
-#: hubic-gtk.py:471
+#: hubic-gtk.py:475
 #, python-brace-format
 msgid "Up: {0} {1}/s – Down: {2} {3}/s"
 msgstr ""
 
-#: hubic-gtk.py:496
+#: hubic-gtk.py:500
 #, python-brace-format
 msgid "{0} waiting ({1} {2} up – {3} {4} down)"
 msgstr ""
 
-#: hubic-gtk.py:507
+#: hubic-gtk.py:511
 msgid "Current transfers"
 msgstr ""
 
-#: hubic-gtk.py:514
+#: hubic-gtk.py:518
 msgid "Start Hubic"
 msgstr ""
 
-#: hubic-gtk.py:523
+#: hubic-gtk.py:527
 msgid "Resume synchronization"
 msgstr ""
 
-#: hubic-gtk.py:527
+#: hubic-gtk.py:531
 msgid "Suspend synchronization"
 msgstr ""
 
-#: hubic-gtk.py:535
+#: hubic-gtk.py:539
 msgid "Stop Hubic"
 msgstr ""
 
-#: hubic-gtk.py:548
+#: hubic-gtk.py:552
 msgid "Show notification messages"
 msgstr ""
 
-#: hubic-gtk.py:569
+#: hubic-gtk.py:573
 msgid "Last messages"
 msgstr ""
 
-#: hubic-gtk.py:656
+#: hubic-gtk.py:587
+msgid "Report a bug"
+msgstr ""
+
+#: hubic-gtk.py:667
 msgid ""
 "An attempt to get a status icon for hubiC on Gnu/Linux and provide an easy "
 "way to manage your encfs synchronised folders."
 msgstr ""
 
-#: hubic-gtk.py:660
+#: hubic-gtk.py:671
 msgid ""
 "HubicGTK is released under the WTF public license\n"
 "Status icons use famfamfam silk icons, released under CC By 2.5 license"

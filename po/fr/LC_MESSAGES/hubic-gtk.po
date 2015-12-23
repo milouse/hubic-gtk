@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: HubicStatus 0.3\n"
 "Report-Msgid-Bugs-To: bugs@depar.is\n"
-"POT-Creation-Date: 2015-12-21 17:54+0100\n"
-"PO-Revision-Date: 2015-12-21 17:55+0100\n"
+"POT-Creation-Date: 2015-12-23 15:36+0100\n"
+"PO-Revision-Date: 2015-12-23 15:37+0100\n"
 "Last-Translator: Étienne Deparis <etienne@depar.is>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"
@@ -138,50 +138,54 @@ msgstr "{0} hubiC est relancé car le réseau est de nouveau accessible"
 msgid "{0} Pause Hubic as network connectivity seems to be down"
 msgstr "{0} hubiC est passé en pause car le réseau n'est plus accessible"
 
-#: hubic-gtk.py:455
+#: hubic-gtk.py:459
 #, python-brace-format
 msgid "{0} {1} ({2}%) used on {3} {4} total"
 msgstr "{0} {1} ({2}%) utilisé sur un total de {3} {4}"
 
-#: hubic-gtk.py:471
+#: hubic-gtk.py:475
 #, python-brace-format
 msgid "Up: {0} {1}/s – Down: {2} {3}/s"
 msgstr "Débit montant : {0} {1}/s – Descendant : {2} {3}/s"
 
-#: hubic-gtk.py:496
+#: hubic-gtk.py:500
 #, python-brace-format
 msgid "{0} waiting ({1} {2} up – {3} {4} down)"
 msgstr "{0} en attente ({1} {2} montant – {3} {4} descendant)"
 
-#: hubic-gtk.py:507
+#: hubic-gtk.py:511
 msgid "Current transfers"
 msgstr "Transferts actuels"
 
-#: hubic-gtk.py:514
+#: hubic-gtk.py:518
 msgid "Start Hubic"
 msgstr "Démarrer hubiC"
 
-#: hubic-gtk.py:523
+#: hubic-gtk.py:527
 msgid "Resume synchronization"
 msgstr "Relancer la synchronisation"
 
-#: hubic-gtk.py:527
+#: hubic-gtk.py:531
 msgid "Suspend synchronization"
 msgstr "Suspendre la synchronisation"
 
-#: hubic-gtk.py:535
+#: hubic-gtk.py:539
 msgid "Stop Hubic"
 msgstr "Arrêter hubiC"
 
-#: hubic-gtk.py:548
+#: hubic-gtk.py:552
 msgid "Show notification messages"
 msgstr "Afficher les messages de notification"
 
-#: hubic-gtk.py:569
+#: hubic-gtk.py:573
 msgid "Last messages"
 msgstr "Derniers messages"
 
-#: hubic-gtk.py:656
+#: hubic-gtk.py:587
+msgid "Report a bug"
+msgstr "Rapporter un bogue"
+
+#: hubic-gtk.py:667
 msgid ""
 "An attempt to get a status icon for hubiC on Gnu/Linux and provide an easy "
 "way to manage your encfs synchronised folders."
@@ -189,7 +193,7 @@ msgstr ""
 "Un essai d'icône de statut pour hubiC sous Gnu/Linux permettant également de "
 "gérer vos dossiers synchronisés chiffrés avec encfs."
 
-#: hubic-gtk.py:660
+#: hubic-gtk.py:671
 msgid ""
 "HubicGTK is released under the WTF public license\n"
 "Status icons use famfamfam silk icons, released under CC By 2.5 license"
