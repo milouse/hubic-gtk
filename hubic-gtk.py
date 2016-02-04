@@ -140,26 +140,6 @@ class EncfsMenu:
         self.hubic_dir = hubic_dir
 
 
-    def password_prompt(self):
-        prompt_dialog = gtk.MessageDialog(
-            None,
-            gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
-            gtk.MESSAGE_QUESTION,
-            gtk.BUTTONS_OK,
-            _('Pease enter your password')
-        )
-        prompt_dialog.set_default_response(gtk.RESPONSE_OK)
-        pass_entry = gtk.Entry()
-        pass_entry.set_visibility(False)
-        pass_entry.set_activates_default(True)
-        prompt_dialog.vbox.pack_end(pass_entry, True, True, 5)
-        prompt_dialog.show_all()
-        prompt_dialog.run()
-        password = pass_entry.get_text()
-        prompt_dialog.destroy()
-        return password
-
-
     def build_menu(self, menu):
         encfs_repos = self.config.sections()
         if len(encfs_repos) > 1:
@@ -245,10 +225,17 @@ class EncfsMenu:
                     )
                     return False
             else:
-                password = self.password_prompt()
+                try:
+                    password = subprocess.check_output(['zenity', '--password'])
+                except subprocess.CalledProcessError:
+                    # Nothing to do, user should have hit cancel button
+                    password = ''
 
             password = password.strip()
-            encfs_mount_cmd = 'echo "{0}" | ENCFS6_CONFIG="{1}" encfs -S "{2}" "{3}"'.format(password, encfs_config_file, origin, mount_point)
+
+            encfs_mount_cmd = 'false'
+            if password != '':
+                encfs_mount_cmd = 'echo "{0}" | ENCFS6_CONFIG="{1}" encfs -S "{2}" "{3}"'.format(password, encfs_config_file, origin, mount_point)
 
             if subprocess.call(encfs_mount_cmd, shell=True) == 0:
                 self.notify(_('{0} correctly mounted').format(mount_point))
