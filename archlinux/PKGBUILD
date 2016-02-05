@@ -8,7 +8,7 @@ pkgdesc="An attempt to get a status icon for Hubic on Linux"
 arch=('any')
 url="https://projects.depar.is/hubic-gtk/"
 license=('custom:WTFPL')
-depends=('hubic' 'python2' 'pygtk' 'python2-dbus' 'python2-notify' 'python2-xdg')
+depends=('hubic' 'python2' 'pygtk' 'python2-dbus' 'python2-notify' 'python2-xdg' 'zenity')
 install=$pkgname.install
 source=($pkgname-$pkgver.tar.gz::https://projects.depar.is/hubic-gtk/raw/archlinux/$pkgname-$pkgver.tar.gz?name=$_fossilver)
 sha1sums=('0f1628c14725e67a9cdefbf5b80040c97376f795')
