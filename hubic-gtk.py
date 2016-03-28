@@ -162,10 +162,6 @@ class EncfsMenu:
             encfs_menu_button.set_submenu(encfs_menu)
             menu.append(encfs_menu_button)
 
-            sep = gtk.SeparatorMenuItem()
-            sep.show()
-            menu.append(sep)
-
 
     def notify(self, msg, urgency=pynotify.URGENCY_NORMAL):
         pynotify.init(_('HubicGTK Secure Repositories'))
@@ -426,6 +422,10 @@ class SystrayIconApp:
         subprocess.Popen(shlex.split('xdg-open https://projects.depar.is/hubic-gtk/ticket'))
 
 
+    def on_backup_management(self, widget):
+        subprocess.Popen(['./backup_mngt.sh'])
+
+
     def make_menu(self, event_button, event_time):
         menu = gtk.Menu()
 
@@ -566,9 +566,22 @@ class SystrayIconApp:
         sep.show()
         menu.append(sep)
 
+        # Backup management only when connected?
+        backupmgt = gtk.MenuItem(_('Backup management'))
+        backupmgt.show()
+        menu.append(backupmgt)
+        if self.hubic_state == 'Killed':
+            backupmgt.set_state(gtk.STATE_INSENSITIVE)
+        else:
+            backupmgt.connect('activate', self.on_backup_management)
+
         # Encfs submenu
         encfs_menu = EncfsMenu(self.config, self.get_hubic_dir())
         encfs_menu.build_menu(menu)
+
+        sep = gtk.SeparatorMenuItem()
+        sep.show()
+        menu.append(sep)
 
         # report a bug
         reportbug = gtk.MenuItem(_('Report a bug'))
