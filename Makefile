@@ -62,7 +62,7 @@ sha1sum: $(PKGNAME)-$(PKGVER).tar.gz
 	sed -i "s/sha1sums=.*/sha1sums=('$(SHA1SUM)')/" archlinux/PKGBUILD
 
 $(PKGNAME)-$(PKGVER).tar.gz:
-	cd ../ ; tar czf hubic-gtk/archlinux/$(PKGNAME)-$(PKGVER).tar.gz hubic-gtk --exclude archlinux
+	cd ../ ; tar czf $(PKGNAME)-$(PKGVER).tar.gz hubic-gtk --exclude archlinux ; mv $(PKGNAME)-$(PKGVER).tar.gz hubic-gtk/archlinux/
 
 clean:
 	rm $(PKGNAME)
