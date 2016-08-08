@@ -271,6 +271,7 @@ class SystrayIconApp:
 
         self.last_messages = []
         self.show_messages = False
+        self.must_autostart = os.path.isfile(os.path.join(xdg_config_home, 'autostart', 'hubic-gtk.desktop'))
         self.hubic_dir = ''
 
         if self.config.has_section('general'):
@@ -567,13 +568,13 @@ class SystrayIconApp:
         menu.append(sep)
 
         # Backup management only when connected?
-        backupmgt = gtk.MenuItem(_('Backup management'))
-        backupmgt.show()
-        menu.append(backupmgt)
-        if self.hubic_state == 'Killed':
-            backupmgt.set_state(gtk.STATE_INSENSITIVE)
-        else:
-            backupmgt.connect('activate', self.on_backup_management)
+        #backupmgt = gtk.MenuItem(_('Backup management'))
+        #backupmgt.show()
+        #menu.append(backupmgt)
+        #if self.hubic_state == 'Killed':
+        #    backupmgt.set_state(gtk.STATE_INSENSITIVE)
+        #else:
+        #    backupmgt.connect('activate', self.on_backup_management)
 
         # Encfs submenu
         encfs_menu = EncfsMenu(self.config, self.get_hubic_dir())
@@ -582,6 +583,13 @@ class SystrayIconApp:
         sep = gtk.SeparatorMenuItem()
         sep.show()
         menu.append(sep)
+
+        # Launch at session start
+        mi_button = gtk.CheckMenuItem(_('Automatically start'))
+        mi_button.set_active(self.must_autostart)
+        mi_button.show()
+        menu.append(mi_button)
+        mi_button.connect('toggled', self.toggle_must_autostart)
 
         # report a bug
         reportbug = gtk.MenuItem(_('Report a bug'))
@@ -615,6 +623,28 @@ class SystrayIconApp:
         with open(os.path.join(xdg_config_home, 'hubiC', 'status_icon.conf'), 'wb') as configfile:
             self.config.write(configfile)
             configfile.close()
+
+
+    def toggle_must_autostart(self, widget):
+        self.must_autostart = widget.get_active()
+        file_yet_exists = os.path.isfile(os.path.join(xdg_config_home, 'autostart', 'hubic-gtk.desktop'))
+        if not file_yet_exists and self.must_autostart:
+            with open(os.path.join(xdg_config_home, 'autostart', 'hubic-gtk.desktop'), 'w') as asfile:
+                asfile.write("""[Desktop Entry]
+Name=HubicGTK
+Comment={}
+Exec=hubic-gtk
+Icon=/usr/share/icons/hicolor/128x128/hubic.png
+Terminal=false
+Type=Application
+X-MATE-Autostart-enabled=true
+X-GNOME-Autostart-Delay=20
+StartupNotify=false
+""".format(_('hubiC is an online storage platform provided by OVH. This is a status icon for it.')))
+                asfile.close()
+
+        elif file_yet_exists and not self.must_autostart:
+            os.remove(os.path.join(xdg_config_home, 'autostart', 'hubic-gtk.desktop'))
 
 
     def open_parent_dir(self, widget, file_path):
