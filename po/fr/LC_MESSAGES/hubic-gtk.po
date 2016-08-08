@@ -1,22 +1,22 @@
-# HubicStatus Translation Effort
-# Copyright (C) 2014 HubicStatus volunteers
-# This file is distributed under the same license as the HubicStatus package.
-# Étienne Deparis <etienne@depar.is>, 2014.
-#
+# HubicGTK Translation Effort
+# Copyright (C) YEAR HubicGTK volunteers
+# This file is distributed under the same license as the HubicGTK package.
+# 
+# Translators:
+# Étienne Deparis <etienne@depar.is>, 2014,2016
 msgid ""
 msgstr ""
-"Project-Id-Version: HubicStatus 0.3\n"
+"Project-Id-Version: HubicStatus\n"
 "Report-Msgid-Bugs-To: bugs@depar.is\n"
-"POT-Creation-Date: 2015-12-23 16:08+0100\n"
-"PO-Revision-Date: 2015-12-23 16:10+0100\n"
+"POT-Creation-Date: 2016-08-08 22:48+0200\n"
+"PO-Revision-Date: 2016-08-08 20:50+0000\n"
 "Last-Translator: Étienne Deparis <etienne@depar.is>\n"
-"Language-Team: French <traduc@traduc.org>\n"
-"Language: fr\n"
+"Language-Team: French (France) (http://www.transifex.com/hubic-gtk/hubicstatus/language/fr_FR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: fr_FR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 1.8.6\n"
 
 #: hubic-gtk.py:27
 msgid "Idle"
@@ -62,146 +62,146 @@ msgstr "Démarrage"
 msgid "Killed"
 msgstr "Arrêté"
 
-#: hubic-gtk.py:149
-msgid "Pease enter your password"
-msgstr "Merci d'entrer votre mot de passe"
-
-#: hubic-gtk.py:172
+#: hubic-gtk.py:152
 #, python-brace-format
 msgid "Umount {0}"
 msgstr "Démonter {0}"
 
-#: hubic-gtk.py:175
+#: hubic-gtk.py:155
 #, python-brace-format
 msgid "Mount {0}"
 msgstr "Monter {0}"
 
-#: hubic-gtk.py:180
+#: hubic-gtk.py:160
 msgid "Encrypted repositories"
 msgstr "Dossiers cryptés"
 
-#: hubic-gtk.py:191 hubic-gtk.py:193
+#: hubic-gtk.py:167 hubic-gtk.py:169
 msgid "HubicGTK Secure Repositories"
 msgstr "Dossiers protégés HubicGTK"
 
-#: hubic-gtk.py:206
+#: hubic-gtk.py:182
 #, python-brace-format
 msgid "No config file path declared for {0}"
 msgstr "Aucun chemin valide n'a été déclaré pour le fichier de config de {0}"
 
-#: hubic-gtk.py:217 hubic-gtk.py:223
+#: hubic-gtk.py:193 hubic-gtk.py:199
 #, python-brace-format
 msgid ""
 "{0} already exists in your file system but is NOT an empty folder. Please "
 "fix it and then retry to mount {1}"
-msgstr ""
-"{0} existe déjà dans votre système de fichier mais n'est PAS un dossier "
-"vide. Merci d'effectuer les actions nécessaires avant de retenter de monter "
-"{1}."
+msgstr "{0} existe déjà dans votre système de fichier mais n'est PAS un dossier vide. Merci d'effectuer les actions nécessaires avant de retenter de monter {1}."
 
-#: hubic-gtk.py:243
+#: hubic-gtk.py:219
 #, python-brace-format
 msgid ""
-"Error while reading your password from {0}. Please check if everything is OK "
-"before retrying."
-msgstr ""
-"Une erreur est survenue lors de la lecture de votre mot de passe depuis {0}. "
-"Merci de vérifier que le fichier est bien accessible avant de réessayer."
+"Error while reading your password from {0}. Please check if everything is OK"
+" before retrying."
+msgstr "Une erreur est survenue lors de la lecture de votre mot de passe depuis {0}. Merci de vérifier que le fichier est bien accessible avant de réessayer."
 
-#: hubic-gtk.py:254
+#: hubic-gtk.py:237
 #, python-brace-format
 msgid "{0} correctly mounted"
 msgstr "{0} correctement monté"
 
-#: hubic-gtk.py:261
+#: hubic-gtk.py:244
 #, python-brace-format
 msgid "An error occured while mounting {0}"
 msgstr "Une erreur est survenue lors du montage de {0}"
 
-#: hubic-gtk.py:267
+#: hubic-gtk.py:250
 #, python-brace-format
 msgid "{0} successfully umounted"
 msgstr "{0} correctement démonté"
 
-#: hubic-gtk.py:271
+#: hubic-gtk.py:254
 #, python-brace-format
 msgid "An error occured while umounting {0}"
 msgstr "Une erreur est survenue lors du démontage de {0}"
 
-#: hubic-gtk.py:350
+#: hubic-gtk.py:334
 #, python-brace-format
 msgid "{0} Resume Hubic as network is up"
 msgstr "{0} hubiC est relancé car le réseau est de nouveau accessible"
 
-#: hubic-gtk.py:358
+#: hubic-gtk.py:342
 #, python-brace-format
 msgid "{0} Pause Hubic as network connectivity seems to be down"
 msgstr "{0} hubiC est passé en pause car le réseau n'est plus accessible"
 
-#: hubic-gtk.py:459
+#: hubic-gtk.py:447
 #, python-brace-format
 msgid "{0} {1} ({2}%) used on {3} {4} total"
 msgstr "{0} {1} ({2}%) utilisé sur un total de {3} {4}"
 
-#: hubic-gtk.py:475
+#: hubic-gtk.py:463
 #, python-brace-format
 msgid "Up: {0} {1}/s – Down: {2} {3}/s"
 msgstr "Débit montant : {0} {1}/s – Descendant : {2} {3}/s"
 
-#: hubic-gtk.py:500
+#: hubic-gtk.py:488
 #, python-brace-format
 msgid "{0} waiting ({1} {2} up – {3} {4} down)"
 msgstr "{0} en attente ({1} {2} montant – {3} {4} descendant)"
 
-#: hubic-gtk.py:511
+#: hubic-gtk.py:499
 msgid "Current transfers"
 msgstr "Transferts actuels"
 
-#: hubic-gtk.py:518
+#: hubic-gtk.py:506
 msgid "Start Hubic"
 msgstr "Démarrer hubiC"
 
-#: hubic-gtk.py:527
+#: hubic-gtk.py:515
 msgid "Resume synchronization"
 msgstr "Relancer la synchronisation"
 
-#: hubic-gtk.py:531
+#: hubic-gtk.py:519
 msgid "Suspend synchronization"
 msgstr "Suspendre la synchronisation"
 
-#: hubic-gtk.py:539
+#: hubic-gtk.py:527
 msgid "Stop Hubic"
 msgstr "Arrêter hubiC"
 
-#: hubic-gtk.py:552
+#: hubic-gtk.py:540
 msgid "Show notification messages"
 msgstr "Afficher les messages de notification"
 
-#: hubic-gtk.py:573
+#: hubic-gtk.py:561
 msgid "Last messages"
 msgstr "Derniers messages"
 
-#: hubic-gtk.py:587
+#: hubic-gtk.py:588
+msgid "Automatically start"
+msgstr "Lancement automatique"
+
+#: hubic-gtk.py:595
 msgid "Report a bug"
 msgstr "Rapporter un bogue"
 
-#: hubic-gtk.py:667
+#: hubic-gtk.py:643 generate_desktop_file.py:31
+msgid ""
+"hubiC is an online storage platform provided by OVH. This is a status icon "
+"for it."
+msgstr "hubiC est une plateforme de stockage en ligne créée par OVH. Cette application fournit une icône de statut pour ce service."
+
+#: hubic-gtk.py:697
 msgid ""
 "A status icon for hubiC on Gnu/Linux, providing an easy way to manage your "
 "encfs synchronised folders too."
-msgstr ""
-"Une icône de statut pour hubiC sous Gnu/Linux permettant également de gérer "
-"vos dossiers synchronisés chiffrés avec encfs."
+msgstr "Une icône de statut pour hubiC sous Gnu/Linux permettant également de gérer vos dossiers synchronisés chiffrés avec encfs."
 
-#: hubic-gtk.py:671
+#: hubic-gtk.py:701
 msgid ""
 "HubicGTK is released under the WTF public license\n"
 "Status icons use famfamfam silk icons, released under CC By 2.5 license"
-msgstr ""
-"HubicGTK est disponible selon les termes de la WTF public license\n"
-"Les icônes de statuts utilisent les icônes Silk de famfamfam,\n"
-"disponibles selon les termes d'un contrat Creative Commons Attribution en "
-"version 2.5"
+msgstr "HubicGTK est disponible selon les termes de la WTF public license\nLes icônes de statuts utilisent les icônes Silk de famfamfam,\ndisponibles selon les termes d'un contrat Creative Commons Attribution en version 2.5"
 
-#~ msgid "An attempt to get a status icon for Hubic on Linux"
-#~ msgstr "Un essai pour avoir une icône de statut pour hubiC sous Gnu/Linux"
+#: generate_desktop_file.py:29
+msgid "HubicGTK"
+msgstr "HubicGTK"
+
+#: generate_desktop_file.py:30
+msgid "Network Storage"
+msgstr "Stockage réseau"
