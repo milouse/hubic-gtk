@@ -627,6 +627,9 @@ class SystrayIconApp:
 
     def toggle_must_autostart(self, widget):
         self.must_autostart = widget.get_active()
+        if not os.path.isdir(os.path.join(xdg_config_home, 'autostart')):
+            self.must_autostart = False
+            return False
         file_yet_exists = os.path.isfile(os.path.join(xdg_config_home, 'autostart', 'hubic-gtk.desktop'))
         if not file_yet_exists and self.must_autostart:
             with open(os.path.join(xdg_config_home, 'autostart', 'hubic-gtk.desktop'), 'w') as asfile:
