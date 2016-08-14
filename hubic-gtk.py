@@ -687,8 +687,8 @@ StartupNotify=false
         about_dialog.set_name('HubicGTK')
         about_dialog.set_website('https://projects.depar.is/hubic-gtk')
         about_dialog.set_comments(_("A status icon for hubiC on Gnu/Linux, providing an easy way to manage your encfs synchronised folders too."))
-        #about_dialog.set_logo(GdkPixbuf.Pixbuf.new_from_file('/usr/share/icons/hicolor/128x128/hubic.png'))
-        about_dialog.set_logo(GdkPixbuf.Pixbuf.new_from_file('/usr/share/icons/hicolor/scalable/apps/hubic-gtk.svg'))
+        about_dialog.set_logo(GdkPixbuf.Pixbuf.new_from_file_at_scale('/usr/share/icons/hicolor/scalable/apps/hubic-gtk.svg',
+                                                                      128, 128, True))
         about_dialog.set_version(HUBIC_STATUS_VERSION)
 
         hubic_b_version = subprocess.check_output('hubic help | head -n2', shell=True)
