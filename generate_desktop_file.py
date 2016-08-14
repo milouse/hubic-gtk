@@ -32,7 +32,7 @@ with open('./hubic-gtk.desktop', 'w') as lnfile:
     write_key(lnfile, 'Comment', 'hubiC is an online storage platform provided by OVH. This is a status icon for it.')
 
     lnfile.write("""Exec=hubic-gtk
-Icon=/usr/share/icons/hicolor/128x128/hubic.png
+Icon=hubic-gtk
 Terminal=false
 Type=Application
 Categories=Network;
