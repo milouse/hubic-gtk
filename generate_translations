@@ -35,4 +35,5 @@ elif [ "$1" = "update" ]; then
     # commande à base de msgmerge pour mettre à jour une langue.
     cp "${PO_ROOT}/$2/LC_MESSAGES/$DOMAIN_NAME.po" "${PO_ROOT}/$2/LC_MESSAGES/$DOMAIN_NAME.old.po"
     msgmerge --lang $2 -o "${PO_ROOT}/$2/LC_MESSAGES/$DOMAIN_NAME.po" "${PO_ROOT}/$2/LC_MESSAGES/$DOMAIN_NAME.old.po" ${PO_ROOT}/${DOMAIN_NAME}.pot
+    rm "${PO_ROOT}/$2/LC_MESSAGES/$DOMAIN_NAME.old.po"
 fi
