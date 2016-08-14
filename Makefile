@@ -34,7 +34,7 @@ install-bin:
 install-lang:
 	for lang in $(L10N) ; do \
 	  install -d -m755 $(DEST)/share/locale/$$lang/LC_MESSAGES ; \
-	  msgfmt -o $(DEST)/share/locale/$$lang/LC_MESSAGES/hubic-gtk.mo	po/$$lang/LC_MESSAGES/hubic-gtk.po ; \
+	  msgfmt -o $(DEST)/share/locale/$$lang/LC_MESSAGES/hubic-gtk.mo po/$$lang/LC_MESSAGES/hubic-gtk.po ; \
 	done
 
 uninstall:
@@ -52,27 +52,6 @@ uninstall:
 	for lang in $(L10N) ; do \
 	  rm $(DEST)/share/locale/$$lang/LC_MESSAGES/hubic-gtk.mo ; \
 	done
-
-
-OLDVER != sed -n "s/pkgver=\([\d.]*\)/\1/p" archlinux/PKGBUILD
-OLDREL != sed -n "s/pkgrel=\(\d*\)/\1/p" archlinux/PKGBUILD
-ifeq ($(OLDVER), $(PKGVER))
-	PKGREL != expr $(OLDREL) + 1
-else
-	PKGREL = 1
-endif
-
-dist: sha1sum
-	sed -i "s/pkgver=.*/pkgver=$(PKGVER)/" archlinux/PKGBUILD ; \
-	sed -i "s/pkgrel=.*/pkgrel=$(PKGREL)/" archlinux/PKGBUILD
-
-sha1sum: SHA1SUM = $(shell sha1sum archlinux/$(PKGNAME)-$(PKGVER).tar.gz | cut -d' ' -f1)
-sha1sum: $(PKGNAME)-$(PKGVER).tar.gz
-	sed -i "s/_fossilver=.*/_fossilver=$(shell echo $(SHA1SUM) | cut -c1-10)/" archlinux/PKGBUILD
-	sed -i "s/sha1sums=.*/sha1sums=('$(SHA1SUM)')/" archlinux/PKGBUILD
-
-$(PKGNAME)-$(PKGVER).tar.gz:
-	cd ../ ; tar czf $(PKGNAME)-$(PKGVER).tar.gz hubic-gtk --exclude archlinux ; mv $(PKGNAME)-$(PKGVER).tar.gz hubic-gtk/archlinux/
 
 clean:
 	rm $(PKGNAME)
