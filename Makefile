@@ -1,6 +1,7 @@
 DEST=/usr
 L10N=fr en_US
 PKGNAME=hubic-gtk
+ICON_THEME=theme1
 #PKGVER=dev
 
 all: build install
@@ -21,15 +22,15 @@ install-bin:
 	install -d -m755	$(DEST)/share/icons/hicolor/scalable/apps
 	install -d -m755	$(DEST)/share/icons/hicolor/scalable/status
 
-	install -D -m755 $(PKGNAME)          $(DEST)/bin/$(PKGNAME)
-	install -D -m644 hubic-gtk.svg       $(DEST)/share/icons/gnome/scalable/apps/hubic-gtk.svg
-	install -D -m644 hubic-gtk-alert.svg $(DEST)/share/icons/gnome/scalable/status/hubic-gtk-alert.svg
-	install -D -m644 hubic-gtk-busy.svg  $(DEST)/share/icons/gnome/scalable/status/hubic-gtk-busy.svg
-	install -D -m644 hubic-gtk.svg       $(DEST)/share/icons/hicolor/scalable/apps/hubic-gtk.svg
-	install -D -m644 hubic-gtk-alert.svg $(DEST)/share/icons/hicolor/scalable/status/hubic-gtk-alert.svg
-	install -D -m644 hubic-gtk-busy.svg  $(DEST)/share/icons/hicolor/scalable/status/hubic-gtk-busy.svg
-	install -D -m644 $(PKGNAME).desktop  $(DEST)/share/applications
-	install -D -m644 LICENSE             $(DEST)/share/licenses/$(PKGNAME)/LICENSE
+	install -D -m755 $(PKGNAME)                             $(DEST)/bin/$(PKGNAME)
+	install -D -m644 $(PKGNAME).desktop                     $(DEST)/share/applications
+	install -D -m644 LICENSE                                $(DEST)/share/licenses/$(PKGNAME)/LICENSE
+	install -D -m644 data/${ICON_THEME}/hubic-gtk.svg       $(DEST)/share/icons/gnome/scalable/apps/hubic-gtk.svg
+	install -D -m644 data/${ICON_THEME}/hubic-gtk-alert.svg $(DEST)/share/icons/gnome/scalable/status/hubic-gtk-alert.svg
+	install -D -m644 data/${ICON_THEME}/hubic-gtk-busy.svg  $(DEST)/share/icons/gnome/scalable/status/hubic-gtk-busy.svg
+	install -D -m644 data/${ICON_THEME}/hubic-gtk.svg       $(DEST)/share/icons/hicolor/scalable/apps/hubic-gtk.svg
+	install -D -m644 data/${ICON_THEME}/hubic-gtk-alert.svg $(DEST)/share/icons/hicolor/scalable/status/hubic-gtk-alert.svg
+	install -D -m644 data/${ICON_THEME}/hubic-gtk-busy.svg  $(DEST)/share/icons/hicolor/scalable/status/hubic-gtk-busy.svg
 
 install-lang:
 	for lang in $(L10N) ; do \
