@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg2774"
+   sodipodi:docname="hubic-gtk-alert.svg"
+   viewBox="0 0 125 125"
+   sodipodi:version="0.32"
+   version="1.0"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   inkscape:version="0.91 r13725"
+   width="125"
+   height="125">
+  <defs
+     id="defs4322" />
+  <sodipodi:namedview
+     id="base"
+     bordercolor="#666666"
+     inkscape:pageshadow="2"
+     guidetolerance="10"
+     pagecolor="#ffffff"
+     gridtolerance="10000"
+     inkscape:window-height="857"
+     inkscape:zoom="2.6081609"
+     objecttolerance="10"
+     showgrid="false"
+     borderopacity="1.0"
+     inkscape:current-layer="layer1"
+     inkscape:cx="64.791455"
+     inkscape:cy="51.865493"
+     inkscape:window-y="41"
+     inkscape:window-x="0"
+     inkscape:window-width="1436"
+     inkscape:pageopacity="0.0"
+     inkscape:document-units="px"
+     inkscape:window-maximized="0"
+     inkscape:snap-page="false"
+     showborder="true"
+     borderlayer="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     transform="translate(-40.31,45.061999)">
+    <path
+       id="path13431"
+       style="fill:#ffffff;fill-opacity:1;stroke:#a40000;stroke-width:6.15399981;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0.5;stroke-opacity:1"
+       d="m 117.7065,-10.845499 c -9.764,0 -18.127,5.089 -22.23,12.4 -1.638,-0.915 -3.463,-1.475 -5.392,-1.475 -5.833,0 -10.686,4.692 -12.186,11.062 -2.561,-1.012 -5.516,-1.638 -8.697,-1.638 -9.541,0 -17.288,5.227 -17.288,11.663 0,5.809 6.346,10.588 14.592,11.471 -0.37,0.627 -0.661,1.254 -0.661,1.912 0,6.162 16.889,11.172 37.695,11.172 20.807,0 37.697,-5.01 37.697,-11.172 0,-0.414 -0.28,-0.799 -0.43,-1.201 0.92,0.226 1.83,0.464 2.83,0.464 5.57,0 10.07,-3.784 10.07,-8.44 0,-4.656 -4.5,-8.413 -10.07,-8.413 -0.68,0 -1.28,0.22 -1.93,0.328 0.57,-1.862 0.95,-3.77 0.95,-5.791 0,-12.323 -11.17,-22.342 -24.95,-22.342 z"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:#000000"
+       inkscape:connector-curvature="0"
+       id="path4287"
+       d="m 104.4255,36.295351 c -1.14632,-1.426296 -1.45616,-3.684905 -0.71743,-5.223734 1.37438,-2.862904 5.40165,-3.58458 7.83709,-1.402103 1.64288,1.471174 2.11267,3.816968 1.15658,5.769563 -0.81313,1.659163 -2.12207,2.539322 -4.00726,2.695491 -1.44114,0.119657 -3.36147,-0.708593 -4.26898,-1.839217 z m 5.76669,-11.145517 c -0.13731,-0.190752 -0.40399,-0.75781 -0.59412,-1.258993 -0.66151,-1.747032 -0.66639,-1.736884 4.51365,-14.5643697 4.60392,-11.4020017 4.67995,-11.5777357 5.36588,-12.2263917 1.53956,-1.46026 3.43733,-1.512586 5.90715,-0.164615 1.56929,0.857376 2.53854,2.019727 2.85476,3.42414299 0.2725,1.20044701 0.18525,1.76392201 -0.48122,3.15225201 -0.72503,1.507959 -10.57481,19.5531104 -11.25651,20.6220324 -0.89198,1.398674 -2.3366,2.188731 -3.86315,2.109246 -0.87076,-0.04558 -2.08594,-0.587316 -2.44643,-1.093326 z" />
+  </g>
+  <metadata
+     id="metadata4320">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <cc:license
+           rdf:resource="http://creativecommons.org/publicdomain/zero/1.0/" />
+        <dc:publisher>
+          <cc:Agent
+             rdf:about="http://openclipart.org/">
+            <dc:title>Openclipart</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:title></dc:title>
+        <dc:date>2008-02-08T23:54:06</dc:date>
+        <dc:description />
+        <dc:source>https://openclipart.org/detail/14715/simple-weather-symbols-by-anonymous-14715</dc:source>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Anonymous</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>clouds</rdf:li>
+            <rdf:li>icon</rdf:li>
+            <rdf:li>rain</rdf:li>
+            <rdf:li>snow</rdf:li>
+            <rdf:li>sun</rdf:li>
+            <rdf:li>symbol</rdf:li>
+            <rdf:li>weather</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/publicdomain/zero/1.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>

@@ -1,22 +1,35 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- coding: utf-8;mode: python -*-
 
+# Icons are from: https://openclipart.org/detail/171665/nube
+# Theme1 : https://openclipart.org/detail/213631/red-cloud
+# Theme2 : https://openclipart.org/detail/14715/simple-weather-symbols
+# Exclamation : https://openclipart.org/detail/1695/warning-sign
+# Gears : https://openclipart.org/detail/256083/gears
+# Arrow : https://openclipart.org/detail/198398/mono-rotate-ccw
+
+
 # python stuff
-import os
-import pwd
-import time
-import shlex
-import subprocess
-import ConfigParser
+import os, pwd, time, shlex
+import signal, subprocess
+from configparser import ConfigParser
 
 # other stuff
-import gtk
+import gi
+gi.require_version('GdkPixbuf', '2.0')
+gi.require_version('Gtk', '3.0')
+gi.require_version('Notify', '0.7')
+from gi.repository import GdkPixbuf, Gtk, GLib, GObject, Notify
+#try:
+#    gi.require_version('AppIndicator3', '0.1')
+#    from gi.repository import AppIndicator3 as appindicator
+#except (ImportError, ValueError):
+#    appindicator = None
+
 import dbus
 from dbus.mainloop.glib import DBusGMainLoop
-import pynotify
 from xdg.BaseDirectory import xdg_config_home
 
-HUBIC_ICONS_PATH = os.path.dirname(os.path.realpath(__file__))
 HUBIC_STATUS_VERSION = 'dev'
 HUBIC_L10N_PATH = './po'
 
@@ -134,38 +147,36 @@ class FileFolderHelper:
 
 
 
-class EncfsMenu:
+class EncfsMenu(GObject.Object):
     def __init__(self, config, hubic_dir):
         self.config = config
         self.hubic_dir = hubic_dir
+        Notify.init(_('HubicGTK Secure Repositories'))
 
 
     def build_menu(self, menu):
         encfs_repos = self.config.sections()
         if len(encfs_repos) > 1:
-            encfs_menu = gtk.Menu()
+            encfs_menu = Gtk.Menu()
 
             for sec in self.config.sections():
                 if sec != 'general' and self.config.has_option(sec, 'mount_point'):
                     mount_point = os.path.expanduser(self.config.get(sec, 'mount_point'))
                     if subprocess.call(['grep', '-q', mount_point, '/etc/mtab']) == 0:
-                        mi_button = gtk.MenuItem(_('Umount {0}').format(mount_point))
+                        mi_button = Gtk.MenuItem.new_with_label(_('Umount {0}').format(mount_point))
                         mi_button.connect('activate', self.encfs_action, 'umount', sec)
                     else:
-                        mi_button = gtk.MenuItem(_('Mount {0}').format(mount_point))
+                        mi_button = Gtk.MenuItem.new_with_label(_('Mount {0}').format(mount_point))
                         mi_button.connect('activate', self.encfs_action, 'mount', sec)
-                    mi_button.show()
                     encfs_menu.append(mi_button)
 
-            encfs_menu_button = gtk.MenuItem(_('Encrypted repositories'))
-            encfs_menu_button.show()
+            encfs_menu_button = Gtk.MenuItem.new_with_label(_('Encrypted repositories'))
             encfs_menu_button.set_submenu(encfs_menu)
             menu.append(encfs_menu_button)
 
 
-    def notify(self, msg, urgency=pynotify.URGENCY_NORMAL):
-        pynotify.init(_('HubicGTK Secure Repositories'))
-        nota = pynotify.Notification(
+    def notify(self, msg, urgency=Notify.Urgency.NORMAL):
+        nota = Notify.Notification.new(
             _('HubicGTK Secure Repositories'),
             msg
         )
@@ -180,7 +191,7 @@ class EncfsMenu:
         if not self.config.has_option(section, 'encfs_config'):
             self.notify(
                 _('No config file path declared for {0}').format(section),
-                pynotify.URGENCY_CRITICAL
+                Notify.Urgency.CRITICAL
             )
             return False
 
@@ -191,13 +202,13 @@ class EncfsMenu:
             if os.path.isdir(mount_point) and len(os.listdir(mount_point)) > 0:
                 self.notify(
                     _('{0} already exists in your file system but is NOT an empty folder. Please fix it and then retry to mount {1}').format(mount_point, origin),
-                    pynotify.URGENCY_CRITICAL
+                    Notify.Urgency.CRITICAL
                 )
                 return False
             elif os.path.exists(mount_point) and not os.path.isdir(mount_point):
                 self.notify(
                     _('{0} already exists in your file system but is NOT an empty folder. Please fix it and then retry to mount {1}').format(mount_point, origin),
-                    pynotify.URGENCY_CRITICAL
+                    Notify.Urgency.CRITICAL
                 )
                 return False
             elif not os.path.exists(mount_point):
@@ -217,7 +228,7 @@ class EncfsMenu:
                 else:
                     self.notify(
                         _('Error while reading your password from {0}. Please check if everything is OK before retrying.').format(pass_file),
-                        pynotify.URGENCY_CRITICAL
+                        Notify.Urgency.CRITICAL
                     )
                     return False
             else:
@@ -242,7 +253,7 @@ class EncfsMenu:
             else:
                 self.notify(
                     _('An error occured while mounting {0}').format(mount_point),
-                    pynotify.URGENCY_CRITICAL
+                    Notify.Urgency.CRITICAL
                 )
 
         else:
@@ -252,20 +263,22 @@ class EncfsMenu:
             else:
                 self.notify(
                     _('An error occured while umounting {0}').format(mount_point),
-                    pynotify.URGENCY_CRITICAL
+                    Notify.Urgency.CRITICAL
                 )
 
 
 
-class SystrayIconApp:
+class SystrayIconApp(GObject.Object):
     def __init__(self):
-        self.config = ConfigParser.ConfigParser()
+        Notify.init('HubicGTK')
+
+        self.config = ConfigParser()
         self.config.read(os.path.join(xdg_config_home, 'hubiC', 'status_icon.conf'))
 
-        self.tray = gtk.StatusIcon()
+        self.tray = Gtk.StatusIcon()
         self.hubic_state = 'Killed'
-        self.tray.set_from_file(os.path.join(HUBIC_ICONS_PATH, 'hubic_error.png'))
-        self.tray.set_tooltip(HUBIC_POSSIBLE_STATUS[self.hubic_state])
+        self.tray.set_from_icon_name('hubic-gtk-alert')
+        self.tray.set_tooltip_text(HUBIC_POSSIBLE_STATUS[self.hubic_state])
         self.tray.connect('popup-menu', self.on_right_click)
         self.tray.connect('activate', self.on_left_click)
 
@@ -290,8 +303,8 @@ class SystrayIconApp:
 
     def initialize_dbus_infos(self):
         self.hubic_state = 'Starting'
-        self.tray.set_from_file(os.path.join(HUBIC_ICONS_PATH, 'hubic_busy.png'))
-        self.tray.set_tooltip(HUBIC_POSSIBLE_STATUS[self.hubic_state])
+        self.tray.set_from_icon_name('hubic-gtk-busy')
+        self.tray.set_tooltip_text(HUBIC_POSSIBLE_STATUS[self.hubic_state])
 
         dbus.SystemBus().add_signal_receiver(self.on_networking_change, dbus_interface = 'org.freedesktop.NetworkManager', signal_name = 'StateChanged')
 
@@ -353,27 +366,25 @@ class SystrayIconApp:
 
         self.hubic_state = new_state
         tray_tooltip = HUBIC_POSSIBLE_STATUS[self.hubic_state]
+        tray_icon = 'hubic-gtk-alert'
 
         if self.hubic_state == 'Busy':
-            self.tray.set_from_file(os.path.join(HUBIC_ICONS_PATH, 'hubic_busy.png'))
+            tray_icon = 'hubic-gtk-busy'
             current_works = self.hubic_account_obj.Get('com.hubic.account', 'RunningOperations')
 
             if len(current_works) > 0:
                 tray_tooltip = '{0} – {1}'.format(
                     tray_tooltip,
-                    self.ff_helper.format_task(current_works[0])
-                )
+                    self.ff_helper.format_task(current_works[0]))
 
         elif self.hubic_state == 'Connecting':
-            self.tray.set_from_file(os.path.join(HUBIC_ICONS_PATH, 'hubic_busy.png'))
+            tray_icon = 'hubic-gtk-busy'
 
         elif self.hubic_state == 'Idle':
-            self.tray.set_from_file('/usr/share/icons/hicolor/16x16/hubic.png')
+            tray_icon = 'hubic-gtk'
 
-        else:
-            self.tray.set_from_file(os.path.join(HUBIC_ICONS_PATH, 'hubic_error.png'))
-
-        self.tray.set_tooltip(tray_tooltip)
+        self.tray.set_from_icon_name(tray_icon)
+        self.tray.set_tooltip_text(tray_tooltip)
 
 
     def on_file_change(self, file_path):
@@ -382,8 +393,7 @@ class SystrayIconApp:
         self.last_messages.append((file_path, time.strftime("[%d/%m/%Y %H:%M]") + ' ' + message))
 
         if self.show_messages:
-            pynotify.init('HubicGTK')
-            nota = pynotify.Notification('HubicGTK', message)
+            nota = Notify.Notification.new('HubicGTK', message)
             nota.show()
 
 
@@ -397,15 +407,14 @@ class SystrayIconApp:
         self.last_messages.append((file_path, time.strftime("[%d/%m/%Y %H:%M]") + ' ' + info_message))
 
         if self.show_messages or urgency == 2 or urgency == 3:
-            pynotify.init('HubicGTK')
-            nota = pynotify.Notification('HubicGTK', message)
+            nota = Notify.Notification.new('HubicGTK', message)
 
             if urgency == 1 or urgency == 2:
-                nota.set_urgency(pynotify.URGENCY_NORMAL)
+                nota.set_urgency(Notify.Urgency.NORMAL)
             elif urgency == 3:
-                nota.set_urgency(pynotify.URGENCY_CRITICAL)
+                nota.set_urgency(Notify.Urgency.CRITICAL)
             else:
-                nota.set_urgency(pynotify.URGENCY_LOW)
+                nota.set_urgency(Notify.Urgency.LOW)
 
             nota.show()
 
@@ -428,11 +437,10 @@ class SystrayIconApp:
 
 
     def make_menu(self, event_button, event_time):
-        menu = gtk.Menu()
+        menu = Gtk.Menu()
 
-        current_state_info = gtk.MenuItem(HUBIC_POSSIBLE_STATUS[self.hubic_state])
-        current_state_info.set_state(gtk.STATE_INSENSITIVE)
-        current_state_info.show()
+        current_state_info = Gtk.MenuItem.new_with_label(HUBIC_POSSIBLE_STATUS[self.hubic_state])
+        current_state_info.set_sensitive(False)
         menu.append(current_state_info)
 
         if self.hubic_state == 'Busy' or self.hubic_state == 'Idle':
@@ -443,7 +451,7 @@ class SystrayIconApp:
             used_size_info = self.ff_helper.file_size(used)
             total_size_info = self.ff_helper.file_size(total)
 
-            current_state_info = gtk.MenuItem(
+            current_state_info = Gtk.MenuItem.new_with_label(
                 _('{0} {1} ({2}%) used on {3} {4} total').format(
                     used_size_info[0],
                     used_size_info[1],
@@ -452,14 +460,13 @@ class SystrayIconApp:
                     total_size_info[1]
                 )
             )
-            current_state_info.set_state(gtk.STATE_INSENSITIVE)
-            current_state_info.show()
+            current_state_info.set_sensitive(False)
             menu.append(current_state_info)
 
             if self.hubic_state == 'Busy':
                 downspeed = self.ff_helper.file_size(self.hubic_general_obj.Get('com.hubic.general', 'CurrentDownloadSpeed'))
                 upspeed = self.ff_helper.file_size(self.hubic_general_obj.Get('com.hubic.general', 'CurrentUploadSpeed'))
-                current_state_info = gtk.MenuItem(
+                current_state_info = Gtk.MenuItem.new_with_label(
                     _('Up: {0} {1}/s – Down: {2} {3}/s').format(
                         upspeed[0],
                         upspeed[1],
@@ -467,24 +474,22 @@ class SystrayIconApp:
                         downspeed[1]
                     )
                 )
-                current_state_info.set_state(gtk.STATE_INSENSITIVE)
-                current_state_info.show()
+                current_state_info.set_sensitive(False)
                 menu.append(current_state_info)
 
                 current_works = self.hubic_account_obj.Get('com.hubic.account', 'RunningOperations')
                 if len(current_works) > 0:
-                    workmenu = gtk.Menu()
+                    workmenu = Gtk.Menu()
 
                     for work_tuple in current_works:
-                        mi_button = gtk.MenuItem(self.ff_helper.format_task(work_tuple))
-                        mi_button.show()
+                        mi_button = Gtk.MenuItem.new_with_label(self.ff_helper.format_task(work_tuple))
                         workmenu.append(mi_button)
 
                     queue_status = self.hubic_account_obj.Get('com.hubic.account', 'QueueStatus')
                     total_items = queue_status[0] + queue_status[1] + queue_status[2]
                     up_infos = self.ff_helper.file_size(queue_status[3])
                     down_infos = self.ff_helper.file_size(queue_status[4])
-                    mi_button = gtk.MenuItem(
+                    mi_button = Gtk.MenuItem.new_with_label(
                         _('{0} waiting ({1} {2} up – {3} {4} down)').format(
                             total_items,
                             up_infos[0],
@@ -493,58 +498,50 @@ class SystrayIconApp:
                             down_infos[1]
                         )
                     )
-                    mi_button.show()
                     workmenu.append(mi_button)
 
-                    messages_info_button = gtk.MenuItem(_('Current transfers'))
-                    messages_info_button.show()
+                    messages_info_button = Gtk.MenuItem.new_with_label(_('Current transfers'))
                     messages_info_button.set_submenu(workmenu)
                     menu.append(messages_info_button)
 
 
         if self.hubic_state == 'Killed':
-            start_button = gtk.ImageMenuItem(_('Start Hubic'))
-            start_button_icon = gtk.image_new_from_stock(gtk.STOCK_MEDIA_PLAY, gtk.ICON_SIZE_MENU)
+            start_button = Gtk.ImageMenuItem.new_with_label(_('Start Hubic'))
+            start_button_icon = Gtk.Image.new_from_stock(Gtk.STOCK_MEDIA_PLAY, Gtk.IconSize.MENU)
             start_button.set_image(start_button_icon)
-            start_button.show()
             menu.append(start_button)
             start_button.connect('activate', self.hubic_process, 'start')
 
         else:
             if self.hubic_state == 'Paused':
-                pause_button = gtk.ImageMenuItem(_('Resume synchronization'))
-                pause_button_icon = gtk.image_new_from_stock(gtk.STOCK_MEDIA_PLAY, gtk.ICON_SIZE_MENU)
+                pause_button = Gtk.ImageMenuItem.new_with_label(_('Resume synchronization'))
+                pause_button_icon = Gtk.Image.new_from_stock(Gtk.STOCK_MEDIA_PLAY, Gtk.IconSize.MENU)
                 pause_button.connect('activate', self.hubic_process, 'resume')
             else:
-                pause_button = gtk.ImageMenuItem(_('Suspend synchronization'))
-                pause_button_icon = gtk.image_new_from_stock(gtk.STOCK_MEDIA_PAUSE, gtk.ICON_SIZE_MENU)
+                pause_button = Gtk.ImageMenuItem.new_with_label(_('Suspend synchronization'))
+                pause_button_icon = Gtk.Image.new_from_stock(Gtk.STOCK_MEDIA_PAUSE, Gtk.IconSize.MENU)
                 pause_button.connect('activate', self.hubic_process, 'pause')
 
             pause_button.set_image(pause_button_icon)
-            pause_button.show()
             menu.append(pause_button)
 
-            stop_button = gtk.ImageMenuItem(_('Stop Hubic'))
-            stop_button_icon = gtk.image_new_from_stock(gtk.STOCK_STOP, gtk.ICON_SIZE_MENU)
+            stop_button = Gtk.ImageMenuItem.new_with_label(_('Stop Hubic'))
+            stop_button_icon = Gtk.Image.new_from_stock(Gtk.STOCK_STOP, Gtk.IconSize.MENU)
             stop_button.set_image(stop_button_icon)
-            stop_button.show()
             menu.append(stop_button)
             stop_button.connect('activate', self.hubic_process, 'stop')
 
-        sep = gtk.SeparatorMenuItem()
-        sep.show()
+        sep = Gtk.SeparatorMenuItem()
         menu.append(sep)
 
-        messages_info = gtk.Menu()
+        messages_info = Gtk.Menu()
 
-        mi_button = gtk.CheckMenuItem(_('Show notification messages'))
+        mi_button = Gtk.CheckMenuItem(_('Show notification messages'))
         mi_button.set_active(self.show_messages)
-        mi_button.show()
         messages_info.append(mi_button)
         mi_button.connect('toggled', self.toggle_show_messages)
 
-        sep = gtk.SeparatorMenuItem()
-        sep.show()
+        sep = Gtk.SeparatorMenuItem()
         messages_info.append(sep)
 
         messages_to_show = self.last_messages
@@ -552,27 +549,23 @@ class SystrayIconApp:
             messages_to_show = self.last_messages[-10:]
 
         for file_path, mi in messages_to_show:
-            mi_button = gtk.MenuItem(mi)
-            mi_button.show()
+            mi_button = Gtk.MenuItem.new_with_label(mi)
             messages_info.append(mi_button)
             if file_path != '':
                 mi_button.connect('activate', self.open_parent_dir, file_path)
 
-        messages_info_button = gtk.MenuItem(_('Last messages'))
-        messages_info_button.show()
+        messages_info_button = Gtk.MenuItem.new_with_label(_('Last messages'))
         messages_info_button.set_submenu(messages_info)
         menu.append(messages_info_button)
 
-        sep = gtk.SeparatorMenuItem()
-        sep.show()
+        sep = Gtk.SeparatorMenuItem()
         menu.append(sep)
 
         # Backup management only when connected?
-        #backupmgt = gtk.MenuItem(_('Backup management'))
-        #backupmgt.show()
+        #backupmgt = Gtk.MenuItem.new_with_label(_('Backup management'))
         #menu.append(backupmgt)
         #if self.hubic_state == 'Killed':
-        #    backupmgt.set_state(gtk.STATE_INSENSITIVE)
+        #    backupmgt.set_sensitive(False)
         #else:
         #    backupmgt.connect('activate', self.on_backup_management)
 
@@ -580,37 +573,33 @@ class SystrayIconApp:
         encfs_menu = EncfsMenu(self.config, self.get_hubic_dir())
         encfs_menu.build_menu(menu)
 
-        sep = gtk.SeparatorMenuItem()
-        sep.show()
+        sep = Gtk.SeparatorMenuItem()
         menu.append(sep)
 
         # Launch at session start
-        mi_button = gtk.CheckMenuItem(_('Automatically start'))
+        mi_button = Gtk.CheckMenuItem(_('Automatically start'))
         mi_button.set_active(self.must_autostart)
-        mi_button.show()
         menu.append(mi_button)
         mi_button.connect('toggled', self.toggle_must_autostart)
 
         # report a bug
-        reportbug = gtk.MenuItem(_('Report a bug'))
-        reportbug.show()
+        reportbug = Gtk.MenuItem.new_with_label(_('Report a bug'))
         menu.append(reportbug)
         reportbug.connect('activate', self.on_report_a_bug)
 
         # show about dialog
-        about = gtk.ImageMenuItem(gtk.STOCK_ABOUT)
-        about.show()
+        about = Gtk.ImageMenuItem.new_from_stock(Gtk.STOCK_ABOUT)
         menu.append(about)
         about.connect('activate', self.show_about_dialog)
 
         # add quit item
-        quit_button = gtk.ImageMenuItem(gtk.STOCK_QUIT)
-        quit_button.show()
+        quit_button = Gtk.ImageMenuItem.new_from_stock(Gtk.STOCK_QUIT)
         menu.append(quit_button)
         quit_button.connect('activate', self.kthxbye)
 
-        menu.popup(None, None, gtk.status_icon_position_menu,
-                   event_button, event_time, self.tray)
+        menu.show_all()
+        menu.popup(None, None, Gtk.StatusIcon.position_menu,
+                   self.tray, event_button, event_time)
 
 
     def toggle_show_messages(self, widget):
@@ -672,14 +661,14 @@ StartupNotify=false
                 subprocess.call(['hubic', 'start'])
                 self.initialize_dbus_infos()
             else:
-                print 'Dafuq did I just read?'
+                print('Dafuq did I just read?')
 
         else:
             if action == 'stop':
                 self.hubic_general_iface.Stop()
                 self.hubic_state = 'Killed'
-                self.tray.set_tooltip(HUBIC_POSSIBLE_STATUS[self.hubic_state])
-                self.tray.set_from_file(os.path.join(HUBIC_ICONS_PATH, 'hubic_error.png'))
+                self.tray.set_tooltip_text(HUBIC_POSSIBLE_STATUS[self.hubic_state])
+                self.tray.set_from_icon_name('hubic-gtk-alert')
 
             elif action == 'pause':
                 self.hubic_account_iface.SetPauseState(True)
@@ -688,19 +677,23 @@ StartupNotify=false
                 self.hubic_account_iface.SetPauseState(False)
 
             else:
-                print 'Dafuq did I just read?'
+                print('Dafuq did I just read?')
 
 
     def  show_about_dialog(self, widget):
-        about_dialog = gtk.AboutDialog()
+        about_dialog = Gtk.AboutDialog()
         about_dialog.set_destroy_with_parent(True)
         about_dialog.set_icon_name ("HubicGTK")
         about_dialog.set_name('HubicGTK')
         about_dialog.set_website('https://projects.depar.is/hubic-gtk')
         about_dialog.set_comments(_("A status icon for hubiC on Gnu/Linux, providing an easy way to manage your encfs synchronised folders too."))
-        about_dialog.set_logo(gtk.gdk.pixbuf_new_from_file('/usr/share/icons/hicolor/128x128/hubic.png'))
+        #about_dialog.set_logo(GdkPixbuf.Pixbuf.new_from_file('/usr/share/icons/hicolor/128x128/hubic.png'))
+        about_dialog.set_logo(GdkPixbuf.Pixbuf.new_from_file('/usr/share/icons/hicolor/scalable/apps/hubic-gtk.svg'))
         about_dialog.set_version(HUBIC_STATUS_VERSION)
-        hubic_version = "\n\n" + subprocess.check_output('hubic help | head -n2', shell=True) + subprocess.check_output('mono -V | head -n2', shell=True)
+
+        hubic_b_version = subprocess.check_output('hubic help | head -n2', shell=True)
+        mono_b_version = subprocess.check_output('mono -V | head -n2', shell=True)
+        hubic_version = "\n\n{0}{1}".format(hubic_b_version.decode(), mono_b_version.decode())
         about_dialog.set_copyright(_("HubicGTK is released under the WTF public license\nStatus icons use famfamfam silk icons, released under CC By 2.5 license") + hubic_version)
         about_dialog.set_authors(['Étienne Deparis <etienne@depar.is>'])
         about_dialog.run()
@@ -708,9 +701,14 @@ StartupNotify=false
 
 
     def kthxbye(self, widget):
-        gtk.main_quit()
+        Gtk.main_quit()
 
 
 if __name__ == "__main__":
+    # Install signal handlers
+    GLib.unix_signal_add(GLib.PRIORITY_DEFAULT, signal.SIGTERM,
+                         Gtk.main_quit, None)
+    GLib.unix_signal_add(GLib.PRIORITY_DEFAULT, signal.SIGINT,
+                         Gtk.main_quit, None)
     SystrayIconApp()
-    gtk.main()
+    Gtk.main()
