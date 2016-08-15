@@ -28,9 +28,15 @@ install-bin:
 	install -D -m644 data/${ICON_THEME}/hubic-gtk.svg       $(DEST)/share/icons/gnome/scalable/apps/hubic-gtk.svg
 	install -D -m644 data/${ICON_THEME}/hubic-gtk-alert.svg $(DEST)/share/icons/gnome/scalable/status/hubic-gtk-alert.svg
 	install -D -m644 data/${ICON_THEME}/hubic-gtk-busy.svg  $(DEST)/share/icons/gnome/scalable/status/hubic-gtk-busy.svg
+	install -D -m644 data/${ICON_THEME}/hubic-gtk-encfs.svg $(DEST)/share/icons/gnome/scalable/status/hubic-gtk-encfs.svg
+	install -D -m644 data/${ICON_THEME}/hubic-gtk-alert-encfs.svg $(DEST)/share/icons/gnome/scalable/status/hubic-gtk-alert-encfs.svg
+	install -D -m644 data/${ICON_THEME}/hubic-gtk-busy-encfs.svg  $(DEST)/share/icons/gnome/scalable/status/hubic-gtk-busy-encfs.svg
 	install -D -m644 data/${ICON_THEME}/hubic-gtk.svg       $(DEST)/share/icons/hicolor/scalable/apps/hubic-gtk.svg
 	install -D -m644 data/${ICON_THEME}/hubic-gtk-alert.svg $(DEST)/share/icons/hicolor/scalable/status/hubic-gtk-alert.svg
 	install -D -m644 data/${ICON_THEME}/hubic-gtk-busy.svg  $(DEST)/share/icons/hicolor/scalable/status/hubic-gtk-busy.svg
+	install -D -m644 data/${ICON_THEME}/hubic-gtk-encfs.svg $(DEST)/share/icons/hicolor/scalable/status/hubic-gtk-encfs.svg
+	install -D -m644 data/${ICON_THEME}/hubic-gtk-alert-encfs.svg  $(DEST)/share/icons/hicolor/scalable/status/hubic-gtk-alert-encfs.svg
+	install -D -m644 data/${ICON_THEME}/hubic-gtk-busy-encfs.svg   $(DEST)/share/icons/hicolor/scalable/status/hubic-gtk-busy-encfs.svg
 
 install-lang:
 	for lang in $(L10N) ; do \
