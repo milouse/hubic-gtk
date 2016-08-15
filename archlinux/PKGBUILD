@@ -2,14 +2,14 @@
 # Maintainer: Étienne Deparis <etienne@depar.is>
 pkgname=hubic-gtk
 pkgver=0.99
-pkgrel=3
+pkgrel=4
 pkgdesc="A GTK3 status icon for hubiC"
 arch=('any')
 url="https://projects.depar.is/hubic-gtk/"
 license=('custom:WTFPL')
 depends=('hubic' 'python' 'python-dbus' 'python-xdg' 'zenity')
-source=($pkgname-$pkgver.tar.gz::https://projects.depar.is/hubic-gtk/tarball/HubicGTK.tar.gz?uuid=v1.0-alpha3)
-sha256sums=('cada26768b09f04f5f92bb551bdd508d759c8e145c652a4536da21af7a17540b')
+source=($pkgname-$pkgver.tar.gz::https://projects.depar.is/hubic-gtk/tarball/HubicGTK.tar.gz?uuid=v1.0-alpha4)
+sha256sums=('5f19696b06f6bfe53b43f03fbe4eb3dd9164380bc52416a67cbb78a7cc1ddff5')
 
 build(){
   cd $srcdir/HubicGTK
