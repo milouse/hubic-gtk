@@ -7,6 +7,7 @@
 # Exclamation : https://openclipart.org/detail/1695/warning-sign
 # Gears : https://openclipart.org/detail/256083/gears
 # Arrow : https://openclipart.org/detail/198398/mono-rotate-ccw
+# Padlock : https://openclipart.org/detail/211857/matticonssystemlockscreen
 
 
 # python stuff
@@ -148,15 +149,20 @@ class FileFolderHelper:
 
 
 class EncfsMenu(GObject.Object):
-    def __init__(self, config, hubic_dir):
+    def __init__(self, config, hubic_dir, icon_callback):
         self.config = config
         self.hubic_dir = hubic_dir
+        self.icon_callback = icon_callback
         Notify.init(_('HubicGTK Secure Repositories'))
+
+
+    def set_hubic_dir(self, hubic_dir):
+        self.hubic_dir = hubic_dir
 
 
     def build_menu(self, menu):
         encfs_repos = self.config.sections()
-        if len(encfs_repos) > 1:
+        if self.hubic_dir != '' and len(encfs_repos) > 1:
             encfs_menu = Gtk.Menu()
 
             for sec in self.config.sections():
@@ -173,6 +179,17 @@ class EncfsMenu(GObject.Object):
             encfs_menu_button = Gtk.MenuItem.new_with_label(_('Encrypted repositories'))
             encfs_menu_button.set_submenu(encfs_menu)
             menu.append(encfs_menu_button)
+
+
+    def something_is_mounted(self):
+        encfs_repos = self.config.sections()
+        if len(encfs_repos) > 1:
+            for sec in self.config.sections():
+                if sec != 'general' and self.config.has_option(sec, 'mount_point'):
+                    mount_point = os.path.expanduser(self.config.get(sec, 'mount_point'))
+                    if subprocess.call(['grep', '-q', mount_point, '/etc/mtab']) == 0:
+                        return True
+        return False
 
 
     def notify(self, msg, urgency=Notify.Urgency.NORMAL):
@@ -196,7 +213,6 @@ class EncfsMenu(GObject.Object):
             return False
 
         encfs_config_file = os.path.expanduser(self.config.get(section, 'encfs_config'))
-
 
         if action == 'mount':
             if os.path.isdir(mount_point) and len(os.listdir(mount_point)) > 0:
@@ -233,7 +249,7 @@ class EncfsMenu(GObject.Object):
                     return False
             else:
                 try:
-                    password = subprocess.check_output(['zenity', '--password'])
+                    password = subprocess.check_output(['zenity', '--password']).decode()
                 except subprocess.CalledProcessError:
                     # Nothing to do, user should have hit cancel button
                     password = ''
@@ -246,6 +262,7 @@ class EncfsMenu(GObject.Object):
 
             if subprocess.call(encfs_mount_cmd, shell=True) == 0:
                 self.notify(_('{0} correctly mounted').format(mount_point))
+                self.icon_callback('NotMounted', 'Mounted')
                 if get_bool_conf_option(self.config, section, 'open_folder_at_mount'):
                     folder_heler = FileFolderHelper(self.config, self.hubic_dir)
                     folder_helper.open_folder(mount_point)
@@ -259,6 +276,7 @@ class EncfsMenu(GObject.Object):
         else:
             if subprocess.call(['fusermount', '-u', mount_point]) == 0:
                 self.notify(_('{0} successfully umounted').format(mount_point))
+                self.icon_callback('Mounted', 'NotMounted')
 
             else:
                 self.notify(
@@ -286,6 +304,7 @@ class SystrayIconApp(GObject.Object):
         self.show_messages = False
         self.must_autostart = os.path.isfile(os.path.join(xdg_config_home, 'autostart', 'hubic-gtk.desktop'))
         self.hubic_dir = ''
+        self.session_bus = None
 
         if self.config.has_section('general'):
             self.show_messages = get_bool_conf_option(self.config, 'general', 'notify')
@@ -295,16 +314,32 @@ class SystrayIconApp(GObject.Object):
                 self.hubic_dir = os.path.expanduser(self.config.get('general', 'hubic_dir'))
 
         self.ff_helper = FileFolderHelper(self.config, self.hubic_dir)
+        self.encfs_menu = EncfsMenu(self.config, self.hubic_dir, self.on_state_change)
 
         DBusGMainLoop(set_as_default=True)
+        self.check_for_hubic_main_process()
+
+
+    def check_for_hubic_main_process(self):
         if subprocess.call(['pgrep', '-u' + pwd.getpwuid(os.getuid())[0], '-f', 'mono.*hubiC']) == 0:
-            self.initialize_dbus_infos()
+            if self.session_bus == None:
+                self.initialize_dbus_infos()
+            self.on_state_change(self.hubic_state, self.hubic_state)
+        else:
+            self.cleanup_dbus_infos(None)
+            self.on_state_change(self.hubic_state, 'Killed')
+
+
+    def cleanup_dbus_infos(self, dbus_connection):
+        if self.session_bus != None and (dbus_connection == self.session_bus or dbus_connection == None):
+            self.session_bus.remove_signal_receiver(self.on_file_change, dbus_interface = 'com.hubic.account', signal_name = 'ItemChanged')
+            self.session_bus.remove_signal_receiver(self.on_state_change, dbus_interface = 'com.hubic.general', signal_name = 'StateChanged')
+            self.session_bus.remove_signal_receiver(self.on_message, dbus_interface = 'com.hubic.general', signal_name = 'Messages')
+            self.session_bus = None
 
 
     def initialize_dbus_infos(self):
-        self.hubic_state = 'Starting'
-        self.tray.set_from_icon_name('hubic-gtk-busy')
-        self.tray.set_tooltip_text(HUBIC_POSSIBLE_STATUS[self.hubic_state])
+        self.on_state_change(self.hubic_state, 'Starting')
 
         dbus.SystemBus().add_signal_receiver(self.on_networking_change, dbus_interface = 'org.freedesktop.NetworkManager', signal_name = 'StateChanged')
 
@@ -312,6 +347,7 @@ class SystrayIconApp(GObject.Object):
         self.session_bus.add_signal_receiver(self.on_file_change, dbus_interface = 'com.hubic.account', signal_name = 'ItemChanged')
         self.session_bus.add_signal_receiver(self.on_state_change, dbus_interface = 'com.hubic.general', signal_name = 'StateChanged')
         self.session_bus.add_signal_receiver(self.on_message, dbus_interface = 'com.hubic.general', signal_name = 'Messages')
+        self.session_bus.call_on_disconnection(self.cleanup_dbus_infos)
 
         self.hubic_account_obj = self.session_bus.get_object('com.hubiC', '/com/hubic/Account')
         self.hubic_account_iface = dbus.Interface(self.hubic_account_obj, 'com.hubic.account')
@@ -319,6 +355,7 @@ class SystrayIconApp(GObject.Object):
         self.hubic_general_iface = dbus.Interface(self.hubic_general_obj, 'com.hubic.general')
 
         self.ff_helper.set_hubic_dir(self.get_hubic_dir())
+        self.encfs_menu.set_hubic_dir(self.get_hubic_dir())
         self.on_state_change('Starting', self.hubic_general_obj.Get('com.hubic.general', 'CurrentState'))
 
 
@@ -364,7 +401,9 @@ class SystrayIconApp(GObject.Object):
             self.hubic_process(None, 'stop')
             return
 
-        self.hubic_state = new_state
+        if new_state != 'Mounted' and new_state != 'NotMounted':
+            self.hubic_state = new_state
+
         tray_tooltip = HUBIC_POSSIBLE_STATUS[self.hubic_state]
         tray_icon = 'hubic-gtk-alert'
 
@@ -382,6 +421,9 @@ class SystrayIconApp(GObject.Object):
 
         elif self.hubic_state == 'Idle':
             tray_icon = 'hubic-gtk'
+
+        if self.encfs_menu.something_is_mounted():
+            tray_icon += '-encfs'
 
         self.tray.set_from_icon_name(tray_icon)
         self.tray.set_tooltip_text(tray_tooltip)
@@ -438,6 +480,8 @@ class SystrayIconApp(GObject.Object):
 
     def make_menu(self, event_button, event_time):
         menu = Gtk.Menu()
+
+        self.check_for_hubic_main_process()
 
         current_state_info = Gtk.MenuItem.new_with_label(HUBIC_POSSIBLE_STATUS[self.hubic_state])
         current_state_info.set_sensitive(False)
@@ -570,8 +614,7 @@ class SystrayIconApp(GObject.Object):
         #    backupmgt.connect('activate', self.on_backup_management)
 
         # Encfs submenu
-        encfs_menu = EncfsMenu(self.config, self.get_hubic_dir())
-        encfs_menu.build_menu(menu)
+        self.encfs_menu.build_menu(menu)
 
         sep = Gtk.SeparatorMenuItem()
         menu.append(sep)
@@ -666,9 +709,7 @@ StartupNotify=false
         else:
             if action == 'stop':
                 self.hubic_general_iface.Stop()
-                self.hubic_state = 'Killed'
-                self.tray.set_tooltip_text(HUBIC_POSSIBLE_STATUS[self.hubic_state])
-                self.tray.set_from_icon_name('hubic-gtk-alert')
+                self.on_state_change(self.hubic_state, 'Killed')
 
             elif action == 'pause':
                 self.hubic_account_iface.SetPauseState(True)
@@ -683,7 +724,7 @@ StartupNotify=false
     def  show_about_dialog(self, widget):
         about_dialog = Gtk.AboutDialog()
         about_dialog.set_destroy_with_parent(True)
-        about_dialog.set_icon_name ("HubicGTK")
+        about_dialog.set_icon_name('HubicGTK')
         about_dialog.set_name('HubicGTK')
         about_dialog.set_website('https://projects.depar.is/hubic-gtk')
         about_dialog.set_comments(_("A status icon for hubiC on Gnu/Linux, providing an easy way to manage your encfs synchronised folders too."))
@@ -701,6 +742,7 @@ StartupNotify=false
 
 
     def kthxbye(self, widget):
+        self.cleanup_dbus_infos(None)
         Gtk.main_quit()
 
 
