@@ -51,6 +51,8 @@ HUBIC_POSSIBLE_STATUS = {
     'Killed': _('Killed')
 }
 
+# TODO replace with now standard getboolean
+# https://docs.python.org/3.5/library/configparser.html#supported-datatypes
 def get_bool_conf_option(config, section, option):
     if config.has_option(section, option):
         v = config.get(section, option)
@@ -382,7 +384,7 @@ class SystrayIconApp(GObject.Object):
                 self.last_messages.append((
                     '',
                     _('{0} Resume Hubic as network is up').format(
-                        time.strftime("[%d/%m/%Y %H:%M]")
+                        time.strftime('[%d/%m/%Y %H:%M]')
                     )
                 ))
                 self.hubic_account_iface.SetPauseState(False)
@@ -390,7 +392,7 @@ class SystrayIconApp(GObject.Object):
                 self.last_messages.append((
                     '',
                     _('{0} Pause Hubic as network connectivity seems to be down').format(
-                        time.strftime("[%d/%m/%Y %H:%M]")
+                        time.strftime('[%d/%m/%Y %H:%M]')
                     )
                 ))
                 self.hubic_account_iface.SetPauseState(True)
@@ -432,7 +434,7 @@ class SystrayIconApp(GObject.Object):
     def on_file_change(self, file_path):
         [status, isPublished, canBePublished] = self.hubic_account_iface.GetItemStatus(file_path)
         message = self.ff_helper.crunch_path(file_path) + ': ' + HUBIC_POSSIBLE_STATUS[status]
-        self.last_messages.append((file_path, time.strftime("[%d/%m/%Y %H:%M]") + ' ' + message))
+        self.last_messages.append((file_path, time.strftime('[%d/%m/%Y %H:%M]') + ' ' + message))
 
         if self.show_messages:
             nota = Notify.Notification.new('HubicGTK', message)
@@ -446,7 +448,7 @@ class SystrayIconApp(GObject.Object):
         else:
             info_message = message
 
-        self.last_messages.append((file_path, time.strftime("[%d/%m/%Y %H:%M]") + ' ' + info_message))
+        self.last_messages.append((file_path, time.strftime('[%d/%m/%Y %H:%M]') + ' ' + info_message))
 
         if self.show_messages or urgency == 2 or urgency == 3:
             nota = Notify.Notification.new('HubicGTK', message)
@@ -657,6 +659,7 @@ class SystrayIconApp(GObject.Object):
             configfile.close()
 
 
+    # TODO check the validity of this desktop file
     def toggle_must_autostart(self, widget):
         self.must_autostart = widget.get_active()
         if not os.path.isdir(os.path.join(xdg_config_home, 'autostart')):
@@ -727,7 +730,7 @@ StartupNotify=false
         about_dialog.set_icon_name('HubicGTK')
         about_dialog.set_name('HubicGTK')
         about_dialog.set_website('https://projects.depar.is/hubic-gtk')
-        about_dialog.set_comments(_("A status icon for hubiC on Gnu/Linux, providing an easy way to manage your encfs synchronised folders too."))
+        about_dialog.set_comments(_('A status icon for hubiC on Gnu/Linux, providing an easy way to manage your encfs synchronised folders too.'))
         about_dialog.set_logo(GdkPixbuf.Pixbuf.new_from_file_at_scale('/usr/share/icons/hicolor/scalable/apps/hubic-gtk.svg',
                                                                       128, 128, True))
         about_dialog.set_version(HUBIC_STATUS_VERSION)
@@ -735,7 +738,7 @@ StartupNotify=false
         hubic_b_version = subprocess.check_output('hubic help | head -n2', shell=True)
         mono_b_version = subprocess.check_output('mono -V | head -n2', shell=True)
         hubic_version = "\n\n{0}{1}".format(hubic_b_version.decode(), mono_b_version.decode())
-        about_dialog.set_copyright(_("HubicGTK is released under the WTF public license\nStatus icons use famfamfam silk icons, released under CC By 2.5 license") + hubic_version)
+        about_dialog.set_copyright(_('HubicGTK is released under the WTF public license\nStatus icons use famfamfam silk icons, released under CC By 2.5 license') + hubic_version)
         about_dialog.set_authors(['Étienne Deparis <etienne@depar.is>'])
         about_dialog.run()
         about_dialog.destroy()
@@ -746,7 +749,7 @@ StartupNotify=false
         Gtk.main_quit()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     # Install signal handlers
     GLib.unix_signal_add(GLib.PRIORITY_DEFAULT, signal.SIGTERM,
                          Gtk.main_quit, None)
