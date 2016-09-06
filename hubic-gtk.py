@@ -304,7 +304,7 @@ class SystrayIconApp(GObject.Object):
 
         self.last_messages = []
         self.show_messages = False
-        self.must_autostart = os.path.isfile(os.path.join(xdg_config_home, 'autostart', 'hubic-gtk.desktop'))
+        self.must_autostart = os.path.isfile(os.path.join(xdg_config_home, 'autostart', 'hubic.desktop'))
         self.hubic_dir = ''
         self.session_bus = None
 
@@ -665,9 +665,9 @@ class SystrayIconApp(GObject.Object):
         if not os.path.isdir(os.path.join(xdg_config_home, 'autostart')):
             self.must_autostart = False
             return False
-        file_yet_exists = os.path.isfile(os.path.join(xdg_config_home, 'autostart', 'hubic-gtk.desktop'))
+        file_yet_exists = os.path.isfile(os.path.join(xdg_config_home, 'autostart', 'hubic.desktop'))
         if not file_yet_exists and self.must_autostart:
-            with open(os.path.join(xdg_config_home, 'autostart', 'hubic-gtk.desktop'), 'w') as asfile:
+            with open(os.path.join(xdg_config_home, 'autostart', 'hubic.desktop'), 'w') as asfile:
                 asfile.write("""[Desktop Entry]
 Name=HubicGTK
 Comment={}
@@ -682,7 +682,7 @@ StartupNotify=false
                 asfile.close()
 
         elif file_yet_exists and not self.must_autostart:
-            os.remove(os.path.join(xdg_config_home, 'autostart', 'hubic-gtk.desktop'))
+            os.remove(os.path.join(xdg_config_home, 'autostart', 'hubic.desktop'))
 
 
     def open_parent_dir(self, widget, file_path):
